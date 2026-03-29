@@ -36,14 +36,14 @@ class MainScreen extends StatelessWidget {
             label: 'Tin tức',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.work_outline),
-            activeIcon: Icon(Icons.work),
-            label: 'Tuyển dụng',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.photo_library_outlined),
             activeIcon: Icon(Icons.photo_library),
             label: 'Thư viện',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.work_outline),
+            activeIcon: Icon(Icons.work),
+            label: 'Tuyển dụng',
           ),
         ],
       ),

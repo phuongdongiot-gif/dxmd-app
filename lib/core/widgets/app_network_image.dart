@@ -26,8 +26,8 @@ class AppNetworkImage extends StatelessWidget {
       height: height,
       fit: fit,
       placeholder: (context, url) => SkeletonLoading(
-        width: width ?? double.infinity,
-        height: height ?? double.infinity,
+        width: width,
+        height: height,
       ),
       errorWidget: (context, url, error) => Container(
         width: width,

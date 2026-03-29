@@ -20,7 +20,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _currentCarouselIndex = 0;
+  final ValueNotifier<int> _currentCarouselIndex = ValueNotifier<int>(0);
+
+  @override
+  void dispose() {
+    _currentCarouselIndex.dispose();
+    super.dispose();
+  }
 
   String _getGreeting() {
     final hour = DateTime.now().hour;
@@ -341,8 +347,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildCarousel(HomeState state, BuildContext context) {
-    return Column(
-      children: [
+    return RepaintBoundary(
+      child: Column(
+        children: [
         CarouselSlider(
           options: CarouselOptions(
             height: 220.0,
@@ -350,9 +357,7 @@ class _HomeScreenState extends State<HomeScreen> {
             enlargeCenterPage: true,
             viewportFraction: 0.9,
             onPageChanged: (index, reason) {
-              setState(() {
-                _currentCarouselIndex = index;
-              });
+              _currentCarouselIndex.value = index;
             },
           ),
           items: state.featuredProjects.map((project) {
@@ -406,26 +411,33 @@ class _HomeScreenState extends State<HomeScreen> {
           }).toList(),
         ),
         const SizedBox(height: 16),
-        AnimatedSmoothIndicator(
-          activeIndex: _currentCarouselIndex,
-          count: state.featuredProjects.length,
-          effect: const ExpandingDotsEffect(
-            activeDotColor: Color(0xFF0D47A1),
-            dotColor: Colors.black26,
-            dotHeight: 8,
-            dotWidth: 8,
-            expansionFactor: 3,
-          ),
+        ValueListenableBuilder<int>(
+          valueListenable: _currentCarouselIndex,
+          builder: (context, value, child) {
+            return AnimatedSmoothIndicator(
+              activeIndex: value,
+              count: state.featuredProjects.length,
+              effect: const ExpandingDotsEffect(
+                activeDotColor: Color(0xFF0D47A1),
+                dotColor: Colors.black26,
+                dotHeight: 8,
+                dotWidth: 8,
+                expansionFactor: 3,
+              ),
+            );
+          },
         ),
       ],
+    ),
     );
   }
 
   Widget _buildNewsList(HomeState state, BuildContext context) {
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+    return RepaintBoundary(
+      child: ListView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
       itemCount: state.latestNews.length,
       itemBuilder: (context, index) {
         final news = state.latestNews[index];
@@ -436,6 +448,7 @@ class _HomeScreenState extends State<HomeScreen> {
           onTap: () => context.push('/news/detail', extra: news),
         ).animate().fade(delay: (100 * index).ms).slideY(begin: 0.2, end: 0);
       },
+    ),
     );
   }
 

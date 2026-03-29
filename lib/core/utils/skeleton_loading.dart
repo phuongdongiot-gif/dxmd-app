@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class SkeletonLoading extends StatefulWidget {
-  final double width;
-  final double height;
+  final double? width;
+  final double? height;
   final double borderRadius;
 
   const SkeletonLoading({
     super.key,
-    required this.width,
-    required this.height,
+    this.width,
+    this.height,
     this.borderRadius = 8.0,
   });
 
@@ -46,13 +46,21 @@ class _SkeletonLoadingState extends State<SkeletonLoading>
     return AnimatedBuilder(
       animation: _controller,
       builder: (context, child) {
-        return Container(
-          width: widget.width,
-          height: widget.height,
-          decoration: BoxDecoration(
-            color: _colorTween.value,
-            borderRadius: BorderRadius.circular(widget.borderRadius),
-          ),
+        return LayoutBuilder(
+          builder: (context, constraints) {
+            // Default to constrained bounds, or fallback to 100x100 if infinite and null
+            double w = widget.width ?? (constraints.hasBoundedWidth ? constraints.maxWidth : 100);
+            double h = widget.height ?? (constraints.hasBoundedHeight ? constraints.maxHeight : 100);
+            
+            return Container(
+              width: w,
+              height: h,
+              decoration: BoxDecoration(
+                color: _colorTween.value,
+                borderRadius: BorderRadius.circular(widget.borderRadius),
+              ),
+            );
+          }
         );
       },
     );

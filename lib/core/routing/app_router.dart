@@ -62,16 +62,16 @@ class AppRouter {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: '/recruitment',
-                builder: (context, state) => const RecruitmentScreen(),
+                path: '/gallery',
+                builder: (context, state) => const ThuVienScreen(),
               ),
             ],
           ),
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: '/gallery',
-                builder: (context, state) => const ThuVienScreen(),
+                path: '/recruitment',
+                builder: (context, state) => const RecruitmentScreen(),
               ),
             ],
           ),
