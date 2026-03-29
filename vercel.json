@@ -1,5 +1,5 @@
 {
-  "buildCommand": "bash build.sh",
+  "buildCommand": "if [ ! -d flutter ]; then git clone https://github.com/flutter/flutter.git -b stable --depth 1; fi && export PATH=\"$PATH:$(pwd)/flutter/bin\" && flutter build web --release && rm -rf public && cp -r build/web public",
   "outputDirectory": "public",
   "rewrites": [
     {
