@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../widgets/news_list_tab.dart';
+import '../../../../core/widgets/modern_header_background.dart';
 
 class NewsScreen extends StatelessWidget {
   const NewsScreen({super.key});
@@ -18,14 +19,38 @@ class NewsScreen extends StatelessWidget {
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(bottom: Radius.circular(24)),
           ),
-          title: const Text(
-            'Tin Tức',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF1E293B),
-              letterSpacing: -0.5,
-            ),
+          toolbarHeight: 80,
+          flexibleSpace: const FlexibleSpaceBar(
+            background: ModernHeaderBackground(),
+          ),
+          centerTitle: false,
+          title: const Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'CẬP NHẬT THỊ TRƯỜNG',
+                style: TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1.5,
+                  color: Color(0xFF0D47A1),
+                ),
+              ),
+              SizedBox(height: 2),
+              Text(
+                'Tin Tức',
+                style: TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.w900,
+                  color: Color(0xFF0F172A),
+                  letterSpacing: -0.5,
+                  shadows: [
+                    Shadow(color: Colors.black12, offset: Offset(0, 1), blurRadius: 2),
+                  ],
+                ),
+              ),
+            ],
           ),
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(70),

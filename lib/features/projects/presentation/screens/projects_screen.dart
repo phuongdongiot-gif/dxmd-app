@@ -7,7 +7,9 @@ import '../../../../core/di/injection_container.dart';
 import '../../../../core/utils/skeleton_loading.dart';
 import '../bloc/projects_bloc.dart';
 import '../bloc/projects_event.dart';
+import '../bloc/projects_event.dart';
 import '../bloc/projects_state.dart';
+import '../../../../core/widgets/modern_header_background.dart';
 
 class ProjectsScreen extends StatefulWidget {
   const ProjectsScreen({super.key});
@@ -82,24 +84,21 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                       title: const Text(
                         'Dự án nổi bật', 
                         style: TextStyle(
-                          color: Color(0xFF1E293B),
-                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF0F172A),
+                          fontWeight: FontWeight.w900,
                           letterSpacing: -0.5,
+                          fontSize: 28,
+                          shadows: [
+                            Shadow(
+                              color: Colors.black12,
+                              offset: Offset(0, 1),
+                              blurRadius: 2,
+                            ),
+                          ],
                         ),
                       ),
                       titlePadding: const EdgeInsets.only(left: 20, bottom: 20),
-                      background: Container(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              Colors.white,
-                              const Color(0xFFF5F7FA).withOpacity(0.5),
-                            ],
-                          ),
-                        ),
-                      ),
+                      background: const ModernHeaderBackground(),
                     ),
                   ),
                   SliverPadding(
