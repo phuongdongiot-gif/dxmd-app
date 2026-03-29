@@ -11,6 +11,7 @@ import '../bloc/home_event.dart';
 import '../bloc/home_state.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import '../../../../core/utils/responsive.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -355,7 +356,7 @@ class _HomeScreenState extends State<HomeScreen> {
             height: 220.0,
             autoPlay: true,
             enlargeCenterPage: true,
-            viewportFraction: 0.9,
+            viewportFraction: context.isTablet || context.isDesktop ? 0.45 : 0.9,
             onPageChanged: (index, reason) {
               _currentCarouselIndex.value = index;
             },
@@ -433,13 +434,39 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildNewsList(HomeState state, BuildContext context) {
+    if (context.isTablet || context.isDesktop) {
+      return RepaintBoundary(
+        child: GridView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 16,
+            mainAxisSpacing: 16,
+            childAspectRatio: 2.0, // Thẻ tin tức ngang trên màn hình lớn
+          ),
+          itemCount: state.latestNews.length,
+          itemBuilder: (context, index) {
+            final news = state.latestNews[index];
+            return SharedNewsCard(
+              title: news.title,
+              excerpt: news.excerpt,
+              imageUrl: news.featureImageUrl,
+              onTap: () => context.push('/news/detail', extra: news),
+            ).animate().fade(delay: (100 * index).ms).slideY(begin: 0.2, end: 0);
+          },
+        ),
+      );
+    }
+
     return RepaintBoundary(
       child: ListView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         padding: const EdgeInsets.symmetric(horizontal: 16),
-      itemCount: state.latestNews.length,
-      itemBuilder: (context, index) {
+        itemCount: state.latestNews.length,
+        itemBuilder: (context, index) {
         final news = state.latestNews[index];
         return SharedNewsCard(
           title: news.title,

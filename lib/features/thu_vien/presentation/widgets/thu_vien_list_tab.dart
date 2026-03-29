@@ -11,6 +11,7 @@ import '../bloc/thu_vien_bloc.dart';
 import '../bloc/thu_vien_event.dart';
 import '../bloc/thu_vien_state.dart';
 import '../../domain/entities/thu_vien.dart';
+import '../../../../core/utils/responsive.dart';
 
 class ThuVienListTab extends StatefulWidget {
   final int? categoryId;
@@ -219,8 +220,8 @@ class _ThuVienListTabState extends State<ThuVienListTab> {
               controller: _scrollController,
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               physics: const AlwaysScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: context.isDesktop ? 6 : context.isTablet ? 4 : 2,
                 crossAxisSpacing: 16,
                 mainAxisSpacing: 16,
                 childAspectRatio: 0.75,
