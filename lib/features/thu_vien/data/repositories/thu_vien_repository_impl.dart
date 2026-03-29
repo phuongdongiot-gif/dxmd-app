@@ -11,9 +11,9 @@ class ThuVienRepositoryImpl implements ThuVienRepository {
   ThuVienRepositoryImpl({required this.remoteDataSource});
 
   @override
-  Future<Either<Failure, List<ThuVien>>> getThuVien(int page, int perPage) async {
+  Future<Either<Failure, List<ThuVien>>> getThuVien(int page, int perPage, {int? categoryId}) async {
     try {
-      final remoteData = await remoteDataSource.getThuVien(page: page, perPage: perPage);
+      final remoteData = await remoteDataSource.getThuVien(page: page, perPage: perPage, categoryId: categoryId);
       return Right(remoteData);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));

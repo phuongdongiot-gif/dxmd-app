@@ -7,6 +7,20 @@ abstract class ThuVienEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class FetchThuVienEvent extends ThuVienEvent {}
+class FetchThuVienEvent extends ThuVienEvent {
+  final int? categoryId;
 
-class LoadMoreThuVienEvent extends ThuVienEvent {}
+  const FetchThuVienEvent({this.categoryId});
+
+  @override
+  List<Object> get props => [if (categoryId != null) categoryId!];
+}
+
+class LoadMoreThuVienEvent extends ThuVienEvent {
+  final int? categoryId;
+
+  const LoadMoreThuVienEvent({this.categoryId});
+
+  @override
+  List<Object> get props => [if (categoryId != null) categoryId!];
+}

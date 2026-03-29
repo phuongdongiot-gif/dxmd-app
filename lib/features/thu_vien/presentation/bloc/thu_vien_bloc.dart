@@ -17,7 +17,7 @@ class ThuVienBloc extends Bloc<ThuVienEvent, ThuVienState> {
     emit(state.copyWith(status: ThuVienStatus.loading));
     currentPage = 1;
 
-    final result = await getThuVien(currentPage, perPage);
+    final result = await getThuVien(currentPage, perPage, categoryId: event.categoryId);
 
     result.fold(
       (failure) => emit(state.copyWith(
@@ -36,7 +36,7 @@ class ThuVienBloc extends Bloc<ThuVienEvent, ThuVienState> {
     if (state.hasReachedMax || state.status == ThuVienStatus.loading) return;
 
     currentPage++;
-    final result = await getThuVien(currentPage, perPage);
+    final result = await getThuVien(currentPage, perPage, categoryId: event.categoryId);
 
     result.fold(
       (failure) => emit(state.copyWith(

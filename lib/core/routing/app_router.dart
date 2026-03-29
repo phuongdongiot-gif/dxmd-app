@@ -14,6 +14,9 @@ import '../../features/splash/presentation/screens/splash_screen.dart';
 import '../../features/thu_vien/presentation/screens/thu_vien_screen.dart';
 import '../../features/thu_vien/presentation/screens/photo_view_screen.dart';
 import '../../features/thu_vien/domain/entities/thu_vien.dart';
+import '../../features/search/presentation/screens/search_screen.dart';
+import '../../features/utilities/presentation/screens/loan_calculator_screen.dart';
+import '../../features/utilities/presentation/screens/feng_shui_screen.dart';
 
 class AppRouter {
   static final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
@@ -97,6 +100,21 @@ class AppRouter {
           final thuVien = state.extra as ThuVien;
           return PhotoViewScreen(thuVien: thuVien);
         },
+      ),
+      GoRoute(
+        path: '/search',
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => const SearchScreen(),
+      ),
+      GoRoute(
+        path: '/utilities/loan',
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => const LoanCalculatorScreen(),
+      ),
+      GoRoute(
+        path: '/utilities/feng-shui',
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => const FengShuiScreen(),
       ),
     ],
   );

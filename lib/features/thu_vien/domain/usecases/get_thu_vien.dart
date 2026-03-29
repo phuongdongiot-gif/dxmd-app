@@ -8,7 +8,7 @@ class GetThuVien {
 
   GetThuVien(this.repository);
 
-  Future<Either<Failure, List<ThuVien>>> call(int page, int perPage) async {
-    return await repository.getThuVien(page, perPage);
+  Future<Either<Failure, List<ThuVien>>> call(int page, int perPage, {int? categoryId}) async {
+    return await repository.getThuVien(page, perPage, categoryId: categoryId);
   }
 }
