@@ -1,0 +1,23 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "DXMD (Disable CORS)",
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "--web-browser-flag", 
+                "--disable-web-security"
+            ]
+        },
+        {
+            "name": "DXMD (HTML Renderer)",
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "--web-renderer",
+                "html"
+            ]
+        }
+    ]
+}
