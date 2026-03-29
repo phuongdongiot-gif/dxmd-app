@@ -41,7 +41,9 @@ Future<void> init() async {
   sl.registerFactory(() => HomeBloc(getProjects: sl(), getNews: sl()));
   sl.registerFactory(() => ProjectsBloc(getProjects: sl()));
   sl.registerFactory(() => ProjectDetailBloc(repository: sl()));
-  sl.registerFactory(() => NewsBloc(getNews: sl()));
+  sl.registerFactoryParam<NewsBloc, int?, void>(
+    (categoryId, _) => NewsBloc(getNews: sl(), categoryId: categoryId),
+  );
   sl.registerFactory(() => RecruitmentBloc(getRecruitments: sl()));
   sl.registerFactory(() => ThuVienBloc(getThuVien: sl()));
 

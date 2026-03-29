@@ -5,7 +5,7 @@ import '../models/news_model.dart';
 import 'package:dio/dio.dart';
 
 abstract class NewsRemoteDataSource {
-  Future<List<NewsModel>> getNews({int page = 1, int perPage = 10});
+  Future<List<NewsModel>> getNews({int page = 1, int perPage = 10, int? categoryId});
 }
 
 class NewsRemoteDataSourceImpl implements NewsRemoteDataSource {
@@ -14,15 +14,21 @@ class NewsRemoteDataSourceImpl implements NewsRemoteDataSource {
   NewsRemoteDataSourceImpl({required this.apiClient});
 
   @override
-  Future<List<NewsModel>> getNews({int page = 1, int perPage = 10}) async {
+  Future<List<NewsModel>> getNews({int page = 1, int perPage = 10, int? categoryId}) async {
     try {
+      final queryParams = <String, dynamic>{
+        'page': page,
+        'per_page': perPage,
+        '_embed': true,
+      };
+      
+      if (categoryId != null) {
+        queryParams['categories'] = categoryId;
+      }
+
       final response = await apiClient.get(
         'posts',
-        queryParameters: {
-          'page': page,
-          'per_page': perPage,
-          '_embed': true,
-        },
+        queryParameters: queryParams,
       );
       
       if (response.statusCode == 200) {

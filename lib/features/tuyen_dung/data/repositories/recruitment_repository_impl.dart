@@ -11,7 +11,7 @@ class RecruitmentRepositoryImpl implements RecruitmentRepository {
   RecruitmentRepositoryImpl({required this.remoteDataSource});
 
   @override
-  Future<Either<Failure, Recruitment>> getRecruitments() async {
+  Future<Either<Failure, List<Recruitment>>> getRecruitments() async {
     try {
       final remoteData = await remoteDataSource.getRecruitments();
       return Right(remoteData);

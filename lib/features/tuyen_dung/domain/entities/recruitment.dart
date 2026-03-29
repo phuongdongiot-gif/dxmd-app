@@ -7,6 +7,10 @@ class Recruitment extends Equatable {
   final String excerpt;
   final String slug;
   final String? featureImageUrl;
+  final String? position;
+  final String? qty;
+  final String? address;
+  final String? dateEnd;
 
   const Recruitment({
     required this.id,
@@ -15,8 +19,12 @@ class Recruitment extends Equatable {
     required this.excerpt,
     required this.slug,
     this.featureImageUrl,
+    this.position,
+    this.qty,
+    this.address,
+    this.dateEnd,
   });
 
   @override
-  List<Object?> get props => [id, title, content, excerpt, slug, featureImageUrl];
+  List<Object?> get props => [id, title, content, excerpt, slug, featureImageUrl, position, qty, address, dateEnd];
 }

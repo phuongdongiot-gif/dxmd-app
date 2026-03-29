@@ -6,6 +6,7 @@ class ThuVienModel extends ThuVien {
     required super.title,
     super.excerpt,
     super.featureImageUrl,
+    super.listImg = const [],
   });
 
   factory ThuVienModel.fromJson(Map<String, dynamic> json) {
@@ -27,11 +28,20 @@ class ThuVienModel extends ThuVien {
       }
     }
 
+    List<String> listImg = [];
+    if (json['acf'] != null && json['acf']['list_img'] != null) {
+      final imgDynamicList = json['acf']['list_img'];
+      if (imgDynamicList is List) {
+        listImg = imgDynamicList.whereType<String>().toList();
+      }
+    }
+
     return ThuVienModel(
       id: json['id'] as int,
       title: title,
       excerpt: excerpt,
       featureImageUrl: imageUrl,
+      listImg: listImg,
     );
   }
 }

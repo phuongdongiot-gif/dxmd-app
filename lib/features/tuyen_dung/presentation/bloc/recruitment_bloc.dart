@@ -23,7 +23,7 @@ class RecruitmentBloc extends Bloc<RecruitmentEvent, RecruitmentState> {
       )),
       (data) => emit(state.copyWith(
         status: RecruitmentStatus.success,
-        recruitment: data,
+        recruitments: data,
       )),
     );
   }

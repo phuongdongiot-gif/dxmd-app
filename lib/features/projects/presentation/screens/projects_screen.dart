@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import '../../../../core/widgets/app_network_image.dart';
 import '../../../../core/di/injection_container.dart';
 import '../../../../core/utils/skeleton_loading.dart';
@@ -68,16 +69,41 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                 physics: const BouncingScrollPhysics(),
                 slivers: [
                   SliverAppBar.large(
-                    expandedHeight: 140.0,
+                    expandedHeight: 160.0,
                     pinned: true,
+                    elevation: 8,
+                    shadowColor: Colors.black.withOpacity(0.15),
+                    backgroundColor: Colors.white,
                     surfaceTintColor: Colors.transparent,
-                    flexibleSpace: const FlexibleSpaceBar(
-                      title: Text('Dự án Nổi bật', style: TextStyle(fontWeight: FontWeight.bold)),
-                      titlePadding: EdgeInsets.only(left: 16, bottom: 16),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.vertical(bottom: Radius.circular(24)),
+                    ),
+                    flexibleSpace: FlexibleSpaceBar(
+                      title: const Text(
+                        'Dự án nổi bật', 
+                        style: TextStyle(
+                          color: Color(0xFF1E293B),
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: -0.5,
+                        ),
+                      ),
+                      titlePadding: const EdgeInsets.only(left: 20, bottom: 20),
+                      background: Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Colors.white,
+                              const Color(0xFFF5F7FA).withOpacity(0.5),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                   SliverPadding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
                     sliver: SliverList(
                       delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
@@ -94,15 +120,15 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                               context.push('/projects/detail', extra: project);
                             },
                             child: Container(
-                              margin: const EdgeInsets.only(bottom: 24),
+                              margin: const EdgeInsets.only(bottom: 28),
                               decoration: BoxDecoration(
-                                color: Theme.of(context).cardTheme.color,
-                                borderRadius: BorderRadius.circular(20),
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(24),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.black.withOpacity(0.06),
-                                    blurRadius: 15,
-                                    offset: const Offset(0, 8),
+                                    color: Colors.black.withOpacity(0.08),
+                                    blurRadius: 20,
+                                    offset: const Offset(0, 10),
                                   ),
                                 ],
                               ),
@@ -111,26 +137,56 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   if (project.featureImageUrl != null)
-                                    AppNetworkImage(
-                                      imageUrl: project.featureImageUrl!,
-                                      height: 220,
-                                      width: double.infinity,
+                                    Stack(
+                                      children: [
+                                        AppNetworkImage(
+                                          imageUrl: project.featureImageUrl!,
+                                          height: 240,
+                                          width: double.infinity,
+                                        ),
+                                        Positioned.fill(
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              gradient: LinearGradient(
+                                                begin: Alignment.topCenter,
+                                                end: Alignment.bottomCenter,
+                                                colors: [
+                                                  Colors.transparent,
+                                                  Colors.black.withOpacity(0.4),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Positioned(
+                                          bottom: 16,
+                                          left: 16,
+                                          right: 16,
+                                          child: Text(
+                                            project.title,
+                                            style: const TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w800,
+                                              color: Colors.white,
+                                              letterSpacing: 0.2,
+                                            ),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      ],
                                     )
                                   else
-                                    Container(height: 220, width: double.infinity, color: Colors.grey[200], child: const Icon(Icons.image)),
-                                  Padding(
-                                    padding: const EdgeInsets.all(16.0),
-                                    child: Text(
-                                      project.title,
-                                      style: Theme.of(context).textTheme.titleLarge,
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
+                                    Container(
+                                      height: 240, 
+                                      width: double.infinity, 
+                                      color: Colors.grey[200], 
+                                      child: const Icon(Icons.image, size: 50, color: Colors.grey),
                                     ),
-                                  ),
                                 ],
                               ),
                             ),
-                          );
+                          ).animate().fade(duration: 500.ms).slideY(begin: 0.1, end: 0, delay: (50 * (index % 10)).ms);
                         },
                         childCount: state.hasReachedMax ? state.projects.length : state.projects.length + 1,
                       ),

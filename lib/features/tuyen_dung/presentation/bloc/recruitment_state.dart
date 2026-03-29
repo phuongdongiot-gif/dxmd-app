@@ -5,27 +5,27 @@ enum RecruitmentStatus { initial, loading, success, failure }
 
 class RecruitmentState extends Equatable {
   final RecruitmentStatus status;
-  final Recruitment? recruitment;
+  final List<Recruitment> recruitments;
   final String errorMessage;
 
   const RecruitmentState({
     this.status = RecruitmentStatus.initial,
-    this.recruitment,
+    this.recruitments = const [],
     this.errorMessage = '',
   });
 
   RecruitmentState copyWith({
     RecruitmentStatus? status,
-    Recruitment? recruitment,
+    List<Recruitment>? recruitments,
     String? errorMessage,
   }) {
     return RecruitmentState(
       status: status ?? this.status,
-      recruitment: recruitment ?? this.recruitment,
+      recruitments: recruitments ?? this.recruitments,
       errorMessage: errorMessage ?? this.errorMessage,
     );
   }
 
   @override
-  List<Object?> get props => [status, recruitment, errorMessage];
+  List<Object?> get props => [status, recruitments, errorMessage];
 }

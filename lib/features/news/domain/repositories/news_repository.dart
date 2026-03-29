@@ -3,5 +3,5 @@ import '../../../../core/error/failures.dart';
 import '../entities/news.dart';
 
 abstract class NewsRepository {
-  Future<Either<Failure, List<News>>> getNews({int page = 1, int perPage = 10});
+  Future<Either<Failure, List<News>>> getNews({int page = 1, int perPage = 10, int? categoryId});
 }

@@ -12,16 +12,21 @@ class GetNews implements UseCase<List<News>, GetNewsParams> {
 
   @override
   Future<Either<Failure, List<News>>> call(GetNewsParams params) async {
-    return await repository.getNews(page: params.page, perPage: params.perPage);
+    return await repository.getNews(
+      page: params.page, 
+      perPage: params.perPage,
+      categoryId: params.categoryId,
+    );
   }
 }
 
 class GetNewsParams extends Equatable {
   final int page;
   final int perPage;
+  final int? categoryId;
 
-  const GetNewsParams({this.page = 1, this.perPage = 10});
+  const GetNewsParams({this.page = 1, this.perPage = 10, this.categoryId});
 
   @override
-  List<Object> get props => [page, perPage];
+  List<Object?> get props => [page, perPage, categoryId];
 }

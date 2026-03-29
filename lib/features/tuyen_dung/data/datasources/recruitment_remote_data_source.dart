@@ -5,7 +5,7 @@ import '../models/recruitment_model.dart';
 import 'package:dio/dio.dart';
 
 abstract class RecruitmentRemoteDataSource {
-  Future<RecruitmentModel> getRecruitments();
+  Future<List<RecruitmentModel>> getRecruitments();
 }
 
 class RecruitmentRemoteDataSourceImpl implements RecruitmentRemoteDataSource {
@@ -14,23 +14,18 @@ class RecruitmentRemoteDataSourceImpl implements RecruitmentRemoteDataSource {
   RecruitmentRemoteDataSourceImpl({required this.apiClient});
 
   @override
-  Future<RecruitmentModel> getRecruitments() async {
+  Future<List<RecruitmentModel>> getRecruitments() async {
     try {
       final response = await apiClient.get(
-        'pages',
+        'tuyen-dung',
         queryParameters: {
-          'slug': 'tuyen-dung',
           '_embed': true,
         },
       );
       
       if (response.statusCode == 200) {
         final List<dynamic> data = response.data;
-        if (data.isNotEmpty) {
-          return RecruitmentModel.fromJson(data.first as Map<String, dynamic>);
-        } else {
-          throw ServerException('Page not found');
-        }
+        return data.map((json) => RecruitmentModel.fromJson(json as Map<String, dynamic>)).toList();
       } else {
         throw ServerException();
       }
