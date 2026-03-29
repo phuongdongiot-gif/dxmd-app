@@ -119,7 +119,7 @@ class _NewsListTabState extends State<NewsListTab> with AutomaticKeepAliveClient
                     excerpt: news.excerpt ?? '',
                     imageUrl: news.featureImageUrl,
                     onTap: () {
-                      context.push('/news/${news.id}', extra: news);
+                      context.push('/news/detail', extra: news);
                     },
                   ),
                 ).animate().fade(duration: 400.ms).slideY(begin: 0.2, end: 0, delay: (50 * (index % 10)).ms);
